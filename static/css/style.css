@@ -1,0 +1,18 @@
+.reviewed {
+    background-color: lightyellow !important; /* Override Bootstrap style */
+    color: black !important;
+}
+
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Adjust as needed */
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.number-grid a{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px; /* Adds spacing between the buttons */
+}

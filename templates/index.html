@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        World Geography: Climate and Climate Regions
+                        <span class="float-right" id="timer"></span>
+                    </div>
+                    <div class="card-body">
+                        {% if current_question < questions_length %}
+                        <form method="POST">
+                            <input type="hidden" name="current_question" value="{{ current_question }}">
+                            <div class="question">
+                                <h3>Question No. {{ current_question + 1 }}</h3>
+                                <p>{{ questions[current_question].question }}</p>
+                                <ul class="options list-unstyled">
+                                    {% for option in questions[current_question].options %}
+                                    <li class="mb-2">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="opt{{ current_question }}-{{ loop.index }}" name="q{{ current_question }}" value="{{ option }}" class="custom-control-input" {% if loop.index == 1 %}required{% endif %}>
+                                            <label class="custom-control-label" for="opt{{ current_question }}-{{ loop.index }}">{{ option }}</label>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" name="mark_review" class="btn btn-warning mr-2">Mark for Review & Next</button>
+                                <button type="reset" class="btn btn-secondary mr-2">Clear Response</button>
+                                <button type="submit" class="btn btn-primary">Save & Next</button>
+                            </div>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Question Navigation</div>
+                    <div class="card-body">
+                        <div class="number-grid">
+                            {% for i in range(questions_length) %}
+                            <a href="{{ url_for('quiz', question=i) }}" class="btn btn-outline-primary btn-sm {% if reviewed[i] %}reviewed{% endif %}">{{ i + 1 }}</a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
